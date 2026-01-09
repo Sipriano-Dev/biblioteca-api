@@ -1,0 +1,103 @@
+##################################
+# IDEs
+##################################
+
+### IntelliJ IDEA ###
+.idea/
+*.iml
+*.iws
+*.ipr
+out/
+
+### VS Code ###
+.vscode/
+
+### Eclipse / STS ###
+.project
+.classpath
+.settings/
+.springBeans
+.sts4-cache/
+
+##################################
+# Build / Package
+##################################
+
+### Maven ###
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+
+### Gradle ###
+.gradle/
+build/
+
+##################################
+# Java
+##################################
+
+*.class
+*.log
+hs_err_pid*
+
+##################################
+# Node / Frontend
+##################################
+
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+##################################
+# OS
+##################################
+
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+##################################
+# Archives / Packages
+##################################
+
+*.jar
+*.war
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+##################################
+# Env / Secrets
+##################################
+
+.env
+.env.*
+*.pem
+*.ppk
+
+##################################
+# Misc
+##################################
+
+*.tmp
+*.bak
+*.swp
+*~
+*.orig
+.cache/
+.temp/
+
+!mvnw
+!mvnw.cmd
+!.mvn/wrapper/maven-wrapper.jar
