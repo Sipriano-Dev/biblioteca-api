@@ -36,4 +36,9 @@ public class LivroController {
         return livroService.atualizar(id, livro);
     }
 
+    @DeleteMapping("/{id}")
+    public void deletar(@PathVariable Long id) {
+        livroService.deletar(id);
+    }
+
 }

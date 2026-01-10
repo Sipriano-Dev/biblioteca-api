@@ -34,4 +34,8 @@ public class LivroService {
         return livroRepository.save(livro);
     }
 
+    public void deletar(Long id) {
+        livroRepository.deleteById(id);
+    }
+
 }
