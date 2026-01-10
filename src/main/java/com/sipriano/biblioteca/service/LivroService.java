@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Getter
 @RequiredArgsConstructor
 @Service
@@ -15,6 +17,10 @@ public class LivroService {
 
     public Livro salvar(Livro livro) {
         return livroRepository.save(livro);
+    }
+
+    public List<Livro> listar() {
+        return livroRepository.findAll();
     }
 
 }

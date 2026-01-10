@@ -21,12 +21,12 @@ public class Livro {
     private String titulo;
 
     @Column(nullable = false)
-    private String autor;
+    private String isbn;
 
     @Column(nullable = false)
     private LocalDate dataPublicacao;
 
     @Column(nullable = false)
-    private String isbn;
+    private String autor;
 
 }
