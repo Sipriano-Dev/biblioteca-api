@@ -23,4 +23,8 @@ public class LivroService {
         return livroRepository.findAll();
     }
 
+    public Livro buscarPorId(Long id) {
+        return livroRepository.findById(id).orElse(null);
+    }
+
 }
