@@ -1,14 +1,12 @@
 package com.sipriano.biblioteca.domain;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDate;
 
 @Getter
+@Setter
 @NoArgsConstructor
 @Entity
 public class Livro {

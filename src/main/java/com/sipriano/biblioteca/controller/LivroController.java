@@ -31,4 +31,9 @@ public class LivroController {
         return livroService.buscarPorId(id);
     }
 
+    @PutMapping("/{id}")
+    public Livro atualizar(@PathVariable Long id, @RequestBody Livro livro) {
+        return livroService.atualizar(id, livro);
+    }
+
 }
