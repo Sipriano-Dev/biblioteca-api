@@ -4,7 +4,9 @@ import com.sipriano.biblioteca.domain.Livro;
 import com.sipriano.biblioteca.service.LivroService;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.util.List;
 
@@ -17,28 +19,36 @@ public class LivroController {
     private final LivroService livroService;
 
     @PostMapping
-    public Livro salvar(@RequestBody Livro livro) {
-        return livroService.salvar(livro);
+    public ResponseEntity<Livro> salvar(@RequestBody Livro livro) {
+        Livro livroEntity = livroService.salvar(livro);
+        return ResponseEntity.created(
+                ServletUriComponentsBuilder
+                        .fromCurrentRequest()
+                        .path("/{id}")
+                        .buildAndExpand(livroEntity.getId())
+                        .toUri()
+        ).body(livroEntity);
     }
 
     @GetMapping
-    public List<Livro> listar() {
-        return livroService.listar();
+    public ResponseEntity<List<Livro>> listar() {
+        return ResponseEntity.ok(livroService.listar());
     }
 
     @GetMapping("/{id}")
-    public Livro buscarPorId(@PathVariable Long id) {
-        return livroService.buscarPorId(id);
+    public ResponseEntity<Livro> buscarPorId(@PathVariable Long id) {
+        return ResponseEntity.ok(livroService.buscarPorId(id));
     }
 
     @PutMapping("/{id}")
-    public Livro atualizar(@PathVariable Long id, @RequestBody Livro livro) {
-        return livroService.atualizar(id, livro);
+    public ResponseEntity<Livro> atualizar(@PathVariable Long id, @RequestBody Livro livro) {
+        return ResponseEntity.ok(livroService.atualizar(id, livro));
     }
 
     @DeleteMapping("/{id}")
-    public void deletar(@PathVariable Long id) {
+    public ResponseEntity<Void> deletar(@PathVariable Long id) {
         livroService.deletar(id);
+        return ResponseEntity.noContent().build();
     }
 
 }

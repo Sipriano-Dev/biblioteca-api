@@ -9,6 +9,7 @@ O objetivo é construtir uma api completa e robusta, com paginação, sorting, f
 * Persistência com H2 (em memória)
 * Testes manuais via Postman
 * Estrutura em camadas (Controller / Service / Repository)
+* ResponseEntity
 ---
 ## Filosofia do projeto
 * Aprender fazendo, não copiando
