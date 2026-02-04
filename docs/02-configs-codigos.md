@@ -36,3 +36,68 @@ INSERT INTO livro (titulo, isbn, data_publicacao, autor) VALUES
 INSERT INTO livro (titulo, isbn, data_publicacao, autor) VALUES
 ('O Senhor dos Anéis: A Sociedade do Anel', '9780261103573', '1954-07-29', 'J. R. R. Tolkien');
 ```
+
+# Padrões Úteis — Biblioteca API
+
+Snippets e padrões recorrentes usados no projeto.
+Arquivo de **referência pessoal**.
+
+---
+
+## Criar uri (POST - 201 Created)
+
+**Quando usar**
+- Quando precisar retorna o endereço como no método salvar
+
+**Padrão**
+```java
+
+ ServletUriComponentsBuilder
+    .fromCurrentRequest()
+    .path("/{id}")
+    .buildAndExpand(entity.getId())
+    .toUri()
+
+```
+## Nome
+**Quando usar** 
+
+**Padrão**
+```java
+
+```
+## Nome
+**Quando usar** 
+
+**Padrão**
+```java
+
+```
+## Nome
+**Quando usar** 
+
+**Padrão**
+```java
+
+```
+## Nome
+**Quando usar** 
+
+**Padrão**
+```java
+
+```
+## Nome
+**Quando usar** 
+
+**Padrão**
+```java
+
+```
+## Nome
+**Quando usar** 
+
+**Padrão**
+```java
+
+```

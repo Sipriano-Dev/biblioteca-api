@@ -1,6 +1,7 @@
 package com.sipriano.biblioteca.controller;
 
 import com.sipriano.biblioteca.domain.Livro;
+import com.sipriano.biblioteca.dto.LivroResponseDTO;
 import com.sipriano.biblioteca.service.LivroService;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -31,12 +32,12 @@ public class LivroController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Livro>> listar() {
+    public ResponseEntity<List<LivroResponseDTO>> listar() {
         return ResponseEntity.ok(livroService.listar());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Livro> buscarPorId(@PathVariable Long id) {
+    public ResponseEntity<LivroResponseDTO> buscarPorId(@PathVariable Long id) {
         return ResponseEntity.ok(livroService.buscarPorId(id));
     }
 

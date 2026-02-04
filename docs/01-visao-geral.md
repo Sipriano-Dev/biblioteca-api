@@ -1,172 +1,141 @@
-# Biblioteca API
-## Visão geral
-Esta API é um projeto de estudo contínuo em Java + Spring Boot, criada para evoluir junto com meu aprendizado.
+# Biblioteca API — Visão do Projeto
 
-O objetivo é construtir uma api completa e robusta, com paginação, sorting, filtros, relacionamentos, testes, security e tudo que for adequando pra um projeto sólido, Com código limpo e boas práticas
----
-## O que esta API faz hoje
-* CRUD completo de Livro
-* Persistência com H2 (em memória)
-* Testes manuais via Postman
-* Estrutura em camadas (Controller / Service / Repository)
-* ResponseEntity
----
-## Filosofia do projeto
-* Aprender fazendo, não copiando
-* Evoluir a API por necessidade real
-* Preferir código simples antes de abstrações
-* Documentar decisões depois de implementadas
----
-> Este documento existe para dar contexto ao projeto. As decisões técnicas e a ordem de evolução estão documentadas nos arquivos seguintes.
+## Objetivo
 
-# Ordem de evolução da API
+A Biblioteca API é um projeto de **aprendizado contínuo** em Java + Spring Boot.
 
-Este documento descreve a **ordem consciente de evolução** da Biblioteca API.
+O objetivo é evoluir uma API realista ao longo do tempo, servindo como base prática para estudar:
+- fluxo HTTP
+- arquitetura em camadas
+- validação
+- tratamento de erros
+- testes
+- segurança
+- boas práticas de backend
 
-A ideia não é seguir um checklist fixo, mas registrar **o caminho que fez sentido** conforme o projeto foi crescendo.
+O projeto não nasce “completo”. Ele **cresce conforme novas necessidades surgem**.
 
 ---
 
-## 0️⃣ CRUD básico
+## Visão do Produto
 
-Primeiro passo do projeto.
+Criar uma API REST que permita o gerenciamento de uma biblioteca, começando simples e evoluindo de forma incremental.
 
-* Entidade `Livro`
-* Repository com JPA
-* Service com regras simples
-* Controller com endpoints CRUD
-* Testes manuais via Postman
+O foco não é entregar funcionalidades rapidamente, mas **entender profundamente cada decisão técnica tomada**.
+
+---
+
+## Requisitos Funcionais (estado atual)
+- Cadastro de livros
+- Listagem de livros
+- Atualização de livros
+- Remoção de livros
+
+---
+
+## Requisitos Não Funcionais
+
+- API RESTful
+- Comunicação via HTTP
+- Respostas em JSON
+- Banco H2 em memória no ambiente de desenvolvimento
+- Banco Postgres em Ambiente de produção
+
+---
+
+## Domínio (inicial)
+
+- Livro
+
+Domínios futuros (planejados, não implementados):
+- Autor
+- Usuário
+
+---
+
+## Filosofia do Projeto
+
+- Aprender fazendo, não copiando
+- Resolver problemas reais antes de abstrair
+- Preferir clareza a “soluções mágicas”
+- Documentar decisões depois de entendidas
+
+---
+
+## Ordem de Evolução da API
+
+A ordem abaixo representa **o caminho que fez sentido** até agora.
+Ela pode mudar conforme o projeto evolui.
+
+### 0️⃣ CRUD básico
+- Entity `Livro`
+- Repository JPA
+- Service
+- Controller
+- Testes manuais via Postman
 
 Objetivo:
-
 > Ter algo funcional o mais rápido possível.
 
 ---
 
-## 1️⃣ ResponseEntity
-
-Introdução do controle explícito de respostas HTTP.
-
-* Definir status corretos (200, 201, 204, 404)
-* Parar de depender apenas do comportamento padrão do Spring
+### 1️⃣ ResponseEntity
+- Definição explícita de status HTTP
+- Controle do contrato da API
 
 Objetivo:
-
-> Fazer a API "falar HTTP" corretamente.
-
----
-
-## 2️⃣ DTO (entrada e saída)
-``` De inicio usar manual, futuramente implementar Mapper ```
-
-Separação entre:
-
-* Modelo de domínio (Entity)
-* Contrato da API (DTO)
-
-Benefícios:
-
-* Não expor entidade diretamente
-* Preparar terreno para validação
-* Mais controle sobre o que entra e sai
-* Organizar responsabilidades de camadas
+> Fazer a API “falar HTTP” corretamente.
 
 ---
 
-## 3️⃣ Validação
-
-Validação de dados de entrada antes de atingir o banco.
-
-* Evitar erros 500 causados por dados inválidos
-* Retornar 400 quando o erro é do cliente
+### 2️⃣ DTO
+- Separação entre Entity e contrato da API
+- Conversão manual inicialmente
+- Utilizar mapper depois
 
 Objetivo:
-
-> Proteger a aplicação e melhorar a experiência da API.
-
----
-
-## 4️⃣ Exception Handler
-
-Centralização do tratamento de erros.
-
-* Mapear exceções de negócio para status HTTP
-* Padronizar respostas de erro
-* Evitar try/catch espalhado pelo código
-
-Objetivo:
-
-> Ter respostas previsíveis e consistentes.
+> Controlar entrada e saída de dados.
 
 ---
 
-## 5️⃣ Testes
-
-Introdução de testes automatizados.
-
-* Testes unitários de Service
-* Testes de Controller (quando fizer sentido)
-
-Objetivo:
-
-> Ganhar confiança para evoluir o projeto sem medo.
+### 3️⃣ Validação
+- Validação antes do banco
+- Evitar erros 500 por dados inválidos
 
 ---
 
-## 6️⃣ Paginação, sorting e filtro
-
-Evolução dos endpoints de listagem.
-
-* Paginação para evitar listas grandes
-* Ordenação dos resultados
-* Filtros simples por campos
-
-Objetivo:
-
-> Tornar a API mais realista e escalável.
+### 4️⃣ Exception Handler
+- Centralização do tratamento de erros
+- Respostas previsíveis
 
 ---
 
-## 7️⃣ Swagger / OpenAPI
-
-Documentação automática da API.
-
-* Visualização dos endpoints
-* Parâmetros, respostas e erros
-
-Objetivo:
-
-> Ter uma vitrine clara da API e facilitar testes.
+### 5️⃣ Testes
+- Testes de service
+- Testes de controller quando fizer sentido
 
 ---
 
-## 8️⃣ Security (básico)
-
-Introdução de segurança na API.
-
-* Autenticação
-* Autorização
-* Proteção de endpoints
-
-Objetivo:
-
-> Entender o fluxo de segurança em APIs reais.
+### 6️⃣ Paginação, sorting e filtros
+- Endpoints de listagem mais realistas
 
 ---
 
-## 9️⃣ Profiles e banco real
-
-Separação de ambientes.
-
-* Profile dev (H2)
-* Profile prod (MySQL/Postgres)
-* Configurações específicas por ambiente
-
-Objetivo:
-
-> Aproximar o projeto de um cenário real.
+### 7️⃣ Swagger / OpenAPI
+- Documentação automática da API
 
 ---
 
-> Esta ordem pode mudar conforme novas necessidades surgirem. O importante é que cada etapa resolve um problema real exposto pela anterior.
+### 8️⃣ Security
+- Autenticação
+- Autorização
 
+---
+
+### 9️⃣ Profiles e banco real
+- Separação de ambientes
+- Banco real em produção
+
+---
+
+> Esta visão existe para dar **direção**, não para engessar o projeto.
