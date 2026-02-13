@@ -109,7 +109,12 @@ Objetivo:
 - Respostas previsíveis
 
 ---
+### 5️⃣ Logging
+- Registro estruturado de eventos da aplicação
+- Logs de requisições e erros
+- Diferenciação por níveis (INFO, WARN, ERROR, DEBUG)
 
+---
 ### 5️⃣ Testes
 - Testes de service
 - Testes de controller quando fizer sentido
