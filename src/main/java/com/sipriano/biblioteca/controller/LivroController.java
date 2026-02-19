@@ -1,6 +1,7 @@
 package com.sipriano.biblioteca.controller;
 
 import com.sipriano.biblioteca.domain.Livro;
+import com.sipriano.biblioteca.dto.LivroRequestDTO;
 import com.sipriano.biblioteca.dto.LivroResponseDTO;
 import com.sipriano.biblioteca.service.LivroService;
 import lombok.Getter;
@@ -20,15 +21,15 @@ public class LivroController {
     private final LivroService livroService;
 
     @PostMapping
-    public ResponseEntity<Livro> salvar(@RequestBody Livro livro) {
-        Livro livroEntity = livroService.salvar(livro);
+    public ResponseEntity<LivroResponseDTO> salvar(@RequestBody LivroRequestDTO requestDTO) {
+        LivroResponseDTO responseDTO = livroService.salvar(requestDTO);
         return ResponseEntity.created(
                 ServletUriComponentsBuilder
                         .fromCurrentRequest()
                         .path("/{id}")
-                        .buildAndExpand(livroEntity.getId())
+                        .buildAndExpand(responseDTO.id())
                         .toUri()
-        ).body(livroEntity);
+        ).body(responseDTO);
     }
 
     @GetMapping
@@ -42,8 +43,8 @@ public class LivroController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Livro> atualizar(@PathVariable Long id, @RequestBody Livro livro) {
-        return ResponseEntity.ok(livroService.atualizar(id, livro));
+    public ResponseEntity<LivroResponseDTO> atualizar(@PathVariable Long id, @RequestBody LivroRequestDTO requestDTO) {
+        return ResponseEntity.ok(livroService.atualizar(id, requestDTO));
     }
 
     @DeleteMapping("/{id}")

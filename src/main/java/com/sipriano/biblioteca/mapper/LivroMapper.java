@@ -1,5 +1,6 @@
 package com.sipriano.biblioteca.mapper;
 
+import com.sipriano.biblioteca.dto.LivroRequestDTO;
 import com.sipriano.biblioteca.dto.LivroResponseDTO;
 import com.sipriano.biblioteca.domain.Livro;
 import org.springframework.stereotype.Component;
@@ -8,11 +9,18 @@ import org.springframework.stereotype.Component;
 public class LivroMapper {
 
     public LivroResponseDTO toDTO(Livro entity) {
-        LivroResponseDTO dto = new LivroResponseDTO(
-                entity.getId(), entity.getTitulo(), entity.getIsbn(), entity.getDataPublicacao()
+        return new LivroResponseDTO(
+                entity.getId(), entity.getTitulo(), entity.getIsbn(), entity.getAutor(), entity.getDataPublicacao()
         );
+    }
 
-        return dto;
+    public Livro toEntity(LivroRequestDTO dto) {
+        Livro livro = new Livro();
+        livro.setTitulo(dto.titulo());
+        livro.setIsbn(dto.isbn());
+        livro.setAutor(dto.autor());
+        livro.setDataPublicacao(dto.dataPublicacao());
+        return livro;
     }
 
 }
