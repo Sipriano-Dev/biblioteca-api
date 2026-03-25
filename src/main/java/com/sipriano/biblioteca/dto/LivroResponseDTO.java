@@ -6,7 +6,7 @@ public record LivroResponseDTO(
         Long id,
         String titulo,
         String isbn,
-        String autor,
+        Long autorId,
         LocalDate dataPublicacao
 
 ) {}

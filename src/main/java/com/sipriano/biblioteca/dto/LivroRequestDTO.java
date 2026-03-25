@@ -6,7 +6,7 @@ public record LivroRequestDTO(
 
         String titulo,
         String isbn,
-        String autor,
+        Long autorId,
         LocalDate dataPublicacao
 ) {
 }

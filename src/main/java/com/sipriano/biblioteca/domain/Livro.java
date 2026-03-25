@@ -3,6 +3,7 @@ package com.sipriano.biblioteca.domain;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Getter
@@ -15,16 +16,24 @@ public class Livro {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 150)
     private String titulo;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 20)
     private String isbn;
 
-    @Column(nullable = false)
+    @Column(nullable = false, name = "data_publicacao")//só por exemplo, pois não precisaria
     private LocalDate dataPublicacao;
 
-    @Column(nullable = false)
-    private String autor;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 30)
+    private GeneroLivro genero;
+
+    @Column(nullable = false, length = 20, precision = 18, scale = 2)
+    private BigDecimal preco;
+
+    @ManyToOne
+    @JoinColumn(nullable = false)
+    private Autor autor;
 
 }

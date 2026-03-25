@@ -14,13 +14,14 @@ Quero separar entrada e saída da Entity.
 No momento, o campo `autor` está como `String`, então estou retornando todos os dados no ResponseDTO.
 Quando `Autor` virar uma entidade, posso personalizar melhor o DTO, Pode ser necessário refatorar o DTO quando o dominio evoluir.
 
-## 🗓 2026-00-00 — Titulo
+## 🗓 2026-03-25 — Hikari Datasource
 
 **O que fiz:**  
+Implementei um datasource manualmente, mesmo o spring já fazendo isso.
 
 
 **Por que fiz:**  
-
+Pra aprender a modificar algumas coisas relacionadas a usuarios por sessão, tempo de sessão etc
 
 **Observação:**  
 ## 🗓 2026-00-00 — Titulo

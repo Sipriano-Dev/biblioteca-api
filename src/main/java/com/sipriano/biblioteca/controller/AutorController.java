@@ -1,9 +1,8 @@
 package com.sipriano.biblioteca.controller;
 
-import com.sipriano.biblioteca.dto.LivroRequestDTO;
-import com.sipriano.biblioteca.dto.LivroResponseDTO;
+import com.sipriano.biblioteca.dto.AutorRequestDTO;
+import com.sipriano.biblioteca.dto.AutorResponseDTO;
 import com.sipriano.biblioteca.service.AutorService;
-import com.sipriano.biblioteca.service.LivroService;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -15,14 +14,14 @@ import java.util.List;
 @Getter
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/livros")
-public class LivroController {
+@RequestMapping("/autores")
+public class AutorController {
 
-    private final LivroService livroService;
+    private final AutorService autorService;
 
     @PostMapping
-    public ResponseEntity<LivroResponseDTO> salvar(@RequestBody LivroRequestDTO requestDTO) {
-        LivroResponseDTO responseDTO = livroService.salvar(requestDTO);
+    public ResponseEntity<AutorResponseDTO> salvar(@RequestBody AutorRequestDTO requestDTO) {
+        AutorResponseDTO responseDTO = autorService.salvar(requestDTO);
         return ResponseEntity.created(
                 ServletUriComponentsBuilder
                         .fromCurrentRequest()
@@ -33,24 +32,25 @@ public class LivroController {
     }
 
     @GetMapping
-    public ResponseEntity<List<LivroResponseDTO>> listar() {
-        return ResponseEntity.ok(livroService.listar());
+    public ResponseEntity<List<AutorResponseDTO>> listar() {
+        return ResponseEntity.ok(autorService.listar());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<LivroResponseDTO> buscarPorId(@PathVariable Long id) {
-        return ResponseEntity.ok(livroService.buscarPorId(id));
+    public ResponseEntity<AutorResponseDTO> buscarPorId(@PathVariable Long id) {
+        return ResponseEntity.ok(autorService.buscarPorId(id));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<LivroResponseDTO> atualizar(@PathVariable Long id, @RequestBody LivroRequestDTO requestDTO) {
-        return ResponseEntity.ok(livroService.atualizar(id, requestDTO));
+    public ResponseEntity<AutorResponseDTO> atualizar(@PathVariable Long id, @RequestBody AutorRequestDTO requestDTO) {
+        return ResponseEntity.ok(autorService.atualizar(id, requestDTO));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletar(@PathVariable Long id) {
-        livroService.deletar(id);
+        autorService.deletar(id);
         return ResponseEntity.noContent().build();
     }
+
 
 }
