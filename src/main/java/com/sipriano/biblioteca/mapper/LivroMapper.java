@@ -12,13 +12,18 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class LivroMapper {
 
-    private AutorMapper autorMapper = new AutorMapper();
-    private AutorRepository autorRepository;
+    private final AutorRepository autorRepository;
 
     public LivroResponseDTO toDTO(Livro entity) {
         return new LivroResponseDTO(
-                entity.getId(), entity.getTitulo(), entity.getIsbn(), entity.getAutor().getId(), entity.getDataPublicacao()
-        );
+                entity.getId(),
+                entity.getTitulo(),
+                entity.getIsbn(),
+                entity.getDataPublicacao(),
+                entity.getGenero(),
+                entity.getPreco(),
+                entity.getAutor().getId()
+                );
     }
 
     public Livro toEntity(LivroRequestDTO dto) {
@@ -26,6 +31,8 @@ public class LivroMapper {
         livro.setTitulo(dto.titulo());
         livro.setIsbn(dto.isbn());
         livro.setDataPublicacao(dto.dataPublicacao());
+        livro.setGenero(dto.genero());
+        livro.setPreco(dto.preco());
 
         Autor autor = autorRepository.findById(dto.autorId()).orElse(null);
         livro.setAutor(autor);
