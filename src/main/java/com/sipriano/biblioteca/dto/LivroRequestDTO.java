@@ -1,6 +1,6 @@
 package com.sipriano.biblioteca.dto;
 
-import com.sipriano.biblioteca.domain.GeneroLivro;
+import com.sipriano.biblioteca.domain.enums.GeneroLivro;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;

@@ -1,5 +1,6 @@
 package com.sipriano.biblioteca.domain;
 
+import com.sipriano.biblioteca.domain.enums.GeneroLivro;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -33,7 +34,7 @@ public class Livro {
     private BigDecimal preco;
 
     @ManyToOne
-    @JoinColumn(nullable = false)
+    @JoinColumn(nullable = false, name = "autor_id")
     private Autor autor;
 
 }

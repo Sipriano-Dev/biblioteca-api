@@ -1,4 +1,4 @@
-package com.sipriano.biblioteca.domain;
+package com.sipriano.biblioteca.domain.enums;
 
 public enum GeneroLivro {
 
