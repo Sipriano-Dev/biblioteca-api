@@ -30,25 +30,29 @@ O foco não é entregar funcionalidades rapidamente, mas **entender profundament
 - Listagem de livros
 - Atualização de livros
 - Remoção de livros
+- Cadastro de autores
+- Listagem de autores
+- Atualização de autores
+- Remoção de autores
 
 ---
 
 ## Requisitos Não Funcionais
 
-- API RESTful
-- Comunicação via HTTP
-- Respostas em JSON
-- Banco H2 em memória no ambiente de desenvolvimento
-- Banco Postgres em Ambiente de produção
+- API no padrão RESTful
+- Comunicação via protocolo HTTP
+- Respostas no formato JSON
+- Persistência em PostgreSQL em ambiente de produção
+- Validação de dados de entrada utilizando Bean Validation
 
 ---
 
-## Domínio (inicial)
+## Domínio
 
 - Livro
+- Autor
 
 Domínios futuros (planejados, não implementados):
-- Autor
 - Usuário
 
 ---
@@ -67,8 +71,8 @@ Domínios futuros (planejados, não implementados):
 A ordem abaixo representa **o caminho que fez sentido** até agora.
 Ela pode mudar conforme o projeto evolui.
 
-### 0️⃣ CRUD básico
-- Entity `Livro`
+### 0️⃣ CRUD ✔
+- Entity `Livro`, `Autor`
 - Repository JPA
 - Service
 - Controller
@@ -79,7 +83,7 @@ Objetivo:
 
 ---
 
-### 1️⃣ ResponseEntity
+### 1️⃣ ResponseEntity ✔
 - Definição explícita de status HTTP
 - Controle do contrato da API
 
@@ -88,7 +92,7 @@ Objetivo:
 
 ---
 
-### 2️⃣ DTO
+### 2️⃣ DTO ✔
 - Separação entre Entity e contrato da API
 - Conversão manual inicialmente
 - Utilizar mapper depois

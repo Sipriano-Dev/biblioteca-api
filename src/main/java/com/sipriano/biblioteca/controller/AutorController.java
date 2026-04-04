@@ -3,6 +3,7 @@ package com.sipriano.biblioteca.controller;
 import com.sipriano.biblioteca.dto.AutorRequestDTO;
 import com.sipriano.biblioteca.dto.AutorResponseDTO;
 import com.sipriano.biblioteca.service.AutorService;
+import jakarta.validation.Valid;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +21,7 @@ public class AutorController {
     private final AutorService autorService;
 
     @PostMapping
-    public ResponseEntity<AutorResponseDTO> salvar(@RequestBody AutorRequestDTO requestDTO) {
+    public ResponseEntity<AutorResponseDTO> salvar(@RequestBody @Valid AutorRequestDTO requestDTO) {
         AutorResponseDTO responseDTO = autorService.salvar(requestDTO);
         return ResponseEntity.created(
                 ServletUriComponentsBuilder
