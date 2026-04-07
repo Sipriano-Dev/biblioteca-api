@@ -1,5 +1,6 @@
 package com.sipriano.biblioteca.domain;
 
+import com.sipriano.biblioteca.config.Auditoria;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,7 +13,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @Entity
-public class Autor {
+public class Autor extends Auditoria {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

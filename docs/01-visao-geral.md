@@ -44,6 +44,7 @@ O foco não é entregar funcionalidades rapidamente, mas **entender profundament
 - Respostas no formato JSON
 - Persistência em PostgreSQL em ambiente de produção
 - Validação de dados de entrada utilizando Bean Validation
+- Auditoria
 
 ---
 
@@ -107,36 +108,44 @@ Objetivo:
 - Evitar erros 500 por dados inválidos
 
 ---
+### 4️⃣ Auditoria ✔
+- createdAt / updatedAt automáticos
+- BaseEntity (herança ou composição)
+- Preparação para rastreabilidade
 
-### 4️⃣ Exception Handler
+Objetivo:
+> Garantir histórico e integridade dos dados sem acoplar regra de negócio.
+---
+
+### 5️⃣ Exception Handler
 - Centralização do tratamento de erros
 - Respostas previsíveis
 
 ---
 
-### 5️⃣ Testes
+### 6️⃣ Testes
 - Testes de service
 - Testes de controller quando fizer sentido
 
 ---
 
-### 6️⃣ Paginação, sorting e filtros
+### 7️⃣ Paginação, sorting e filtros
 - Endpoints de listagem mais realistas
 
 ---
 
-### 7️⃣ Swagger / OpenAPI
+### 8️⃣ Swagger / OpenAPI
 - Documentação automática da API
 
 ---
 
-### 8️⃣ Security
+### 9️⃣ Security
 - Autenticação
 - Autorização
 
 ---
 
-### 9️⃣ Profiles e banco real
+### 🔟 Profiles e banco real ✔
 - Separação de ambientes
 - Banco real em produção
 

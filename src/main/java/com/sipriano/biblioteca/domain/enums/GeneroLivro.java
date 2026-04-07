@@ -8,6 +8,7 @@ public enum GeneroLivro {
     ROMANCE,
     BIOGRAFIA,
     CIENCIA,
-    TERROR
+    TERROR,
+    FABULA
 
 }

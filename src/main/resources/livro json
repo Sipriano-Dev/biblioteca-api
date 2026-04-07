@@ -1,0 +1,50 @@
+[
+  {
+    "titulo": "Dom Casmurro",
+    "isbn": "9788535914849",
+    "dataPublicacao": "1899-01-01",
+    "genero": "ROMANCE",
+    "preco": 39.90,
+    "autorId": 1
+  },
+  {
+    "titulo": "Memórias Póstumas de Brás Cubas",
+    "isbn": "9788535910667",
+    "dataPublicacao": "1881-01-01",
+    "genero": "ROMANCE",
+    "preco": 34.90,
+    "autorId": 1
+  },
+  {
+    "titulo": "1984",
+    "isbn": "9780451524935",
+    "dataPublicacao": "1949-06-08",
+    "genero": "FICCAO",
+    "preco": 49.90,
+    "autorId": 2
+  },
+  {
+    "titulo": "A Revolução dos Bichos",
+    "isbn": "9780451526342",
+    "dataPublicacao": "1945-08-17",
+    "genero": "FABULA",
+    "preco": 29.90,
+    "autorId": 2
+  },
+  {
+    "titulo": "Crime e Castigo",
+    "isbn": "9780143058144",
+    "dataPublicacao": "1866-01-01",
+    "genero": "ROMANCE",
+    "preco": 59.90,
+    "autorId": 3
+  },
+  {
+    "titulo": "Os Irmãos Karamazov",
+    "isbn": "9780374528379",
+    "dataPublicacao": "1880-01-01",
+    "genero": "ROMANCE",
+    "preco": 69.90,
+    "autorId": 3
+  }
+]

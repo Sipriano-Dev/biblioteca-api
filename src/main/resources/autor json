@@ -1,0 +1,17 @@
+[
+  {
+    "nome": "Machado de Assis",
+    "dataNascimento": "1839-06-21",
+    "nacionalidade": "Brasileiro"
+  },
+  {
+    "nome": "George Orwell",
+    "dataNascimento": "1903-06-25",
+    "nacionalidade": "Britânico"
+  },
+  {
+    "nome": "Fyodor Dostoevsky",
+    "dataNascimento": "1821-11-11",
+    "nacionalidade": "Russo"
+  }
+]
