@@ -33,8 +33,10 @@ public class AutorController {
     }
 
     @GetMapping
-    public ResponseEntity<List<AutorResponseDTO>> listar() {
-        return ResponseEntity.ok(autorService.listar());
+    public ResponseEntity<List<AutorResponseDTO>> listar(
+            @RequestParam(required = false, name = "nome") String nome
+    ) {
+        return ResponseEntity.ok(autorService.listar(nome));
     }
 
     @GetMapping("/{id}")

@@ -24,8 +24,12 @@ public class AutorService {
         return autorMapper.toDTO(autorRepository.save(autor));
     }
 
-    public List<AutorResponseDTO> listar() {
-        return autorRepository.findAll().stream().map(autorMapper::toDTO).toList();
+    public List<AutorResponseDTO> listar(String nome) {
+        if (nome == null || nome.isEmpty()) {
+            return autorRepository.findAll().stream().map(autorMapper::toDTO).toList();
+        } else {
+            return autorRepository.findByNomeIgnoreCase(nome).stream().map(autorMapper::toDTO).toList();
+        }
     }
 
     public AutorResponseDTO buscarPorId(Long id) {
