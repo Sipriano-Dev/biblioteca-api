@@ -24,6 +24,7 @@ public class AutorService {
         return autorMapper.toDTO(autorRepository.save(autor));
     }
 
+    //Vai ser deixado dessa forma pra fins de aprendizado
     public List<AutorResponseDTO> listar(String nome, String nacionalidade) {
         if (nome == null && nacionalidade == null) {
             return autorRepository.findAll().stream().map(autorMapper::toDTO).toList();
@@ -40,9 +41,14 @@ public class AutorService {
         return autorRepository.findById(id).map(autorMapper::toDTO).orElse(null);
     }
 
+    //Aqui n usa autorMapper, pois atualiza o autor pego com dados do dto, antes era um update cego, sem confirma se ou autor existia
     public AutorResponseDTO atualizar(Long id, AutorRequestDTO dto) {
-        Autor autor = autorMapper.toEntity(dto);
-        autor.setId(id);
+        Autor autor = autorRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Autor não encontrado"));
+
+        autor.setNome(dto.nome());
+        autor.setNacionalidade(dto.nacionalidade());
+
         return autorMapper.toDTO(autorRepository.save(autor));
     }
 

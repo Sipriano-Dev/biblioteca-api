@@ -1,9 +1,11 @@
 package com.sipriano.biblioteca.service;
 
+import com.sipriano.biblioteca.domain.Autor;
 import com.sipriano.biblioteca.dto.LivroRequestDTO;
 import com.sipriano.biblioteca.dto.LivroResponseDTO;
 import com.sipriano.biblioteca.domain.Livro;
 import com.sipriano.biblioteca.mapper.LivroMapper;
+import com.sipriano.biblioteca.repository.AutorRepository;
 import com.sipriano.biblioteca.repository.LivroRepository;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +19,7 @@ import java.util.List;
 public class LivroService {
 
     final LivroRepository livroRepository;
+    final AutorRepository autorRepository;
     final LivroMapper livroMapper;
 
     public LivroResponseDTO salvar(LivroRequestDTO dto) {
@@ -33,8 +36,16 @@ public class LivroService {
     }
 
     public LivroResponseDTO atualizar(Long id, LivroRequestDTO dto) {
-        Livro livro = livroMapper.toEntity(dto);
-        livro.setId(id);
+        Livro livro = livroRepository.findById(id).orElseThrow(() -> new RuntimeException("Livro não encontrado!"));
+
+        livro.setTitulo(dto.titulo());
+        livro.setIsbn(dto.isbn());
+        livro.setDataPublicacao(dto.dataPublicacao());
+        livro.setGenero(dto.genero());
+        livro.setPreco(dto.preco());
+        Autor autor = autorRepository.findById(dto.autorId()).orElseThrow(() -> new RuntimeException("Autor não  encontrado!"));
+        livro.setAutor(autor);
+
         return livroMapper.toDTO(livroRepository.save(livro));
     }
 
