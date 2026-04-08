@@ -24,11 +24,15 @@ public class AutorService {
         return autorMapper.toDTO(autorRepository.save(autor));
     }
 
-    public List<AutorResponseDTO> listar(String nome) {
-        if (nome == null || nome.isEmpty()) {
+    public List<AutorResponseDTO> listar(String nome, String nacionalidade) {
+        if (nome == null && nacionalidade == null) {
             return autorRepository.findAll().stream().map(autorMapper::toDTO).toList();
+        } else if (nacionalidade == null) {
+            return autorRepository.findByNomeContainingIgnoreCase(nome).stream().map(autorMapper::toDTO).toList();
+        } else if (nome == null) {
+            return autorRepository.findByNacionalidadeContainingIgnoreCase(nacionalidade).stream().map(autorMapper::toDTO).toList();
         } else {
-            return autorRepository.findByNomeIgnoreCase(nome).stream().map(autorMapper::toDTO).toList();
+            return autorRepository.findByNomeContainingIgnoreCaseAndNacionalidadeContainingIgnoreCase(nome, nacionalidade).stream().map(autorMapper::toDTO).toList();
         }
     }
 

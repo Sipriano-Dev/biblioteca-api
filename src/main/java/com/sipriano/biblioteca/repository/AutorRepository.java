@@ -9,7 +9,12 @@ import java.util.List;
 
 public interface AutorRepository extends JpaRepository<Autor, Long> {
 
-    @Query("select a from Autor a where a.nome like %:nome%")
-    List<Autor> findByNomeIgnoreCase(@Param("nome") String nome);
+    List<Autor> findByNomeContainingIgnoreCase(String nome);
+
+    List<Autor> findByNacionalidadeContainingIgnoreCase(String nacionalidade);
+
+    List<Autor> findByNomeContainingIgnoreCaseAndNacionalidadeContainingIgnoreCase(
+            String nome, String nacionalidade
+    );
 
 }
