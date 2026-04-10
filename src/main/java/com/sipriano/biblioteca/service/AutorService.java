@@ -3,8 +3,10 @@ package com.sipriano.biblioteca.service;
 import com.sipriano.biblioteca.domain.Autor;
 import com.sipriano.biblioteca.dto.AutorRequestDTO;
 import com.sipriano.biblioteca.dto.AutorResponseDTO;
+import com.sipriano.biblioteca.exceptions.OperacaoNaoPermitidaException;
 import com.sipriano.biblioteca.mapper.AutorMapper;
 import com.sipriano.biblioteca.repository.AutorRepository;
+import com.sipriano.biblioteca.validator.AutorValidator;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,9 +20,11 @@ public class AutorService {
 
     final AutorRepository autorRepository;
     final AutorMapper autorMapper;
+    final AutorValidator  autorValidator;
 
     public AutorResponseDTO salvar(AutorRequestDTO dto) {
         Autor autor = autorMapper.toEntity(dto);
+        autorValidator.validarAutor(autor);
         return autorMapper.toDTO(autorRepository.save(autor));
     }
 
@@ -47,12 +51,19 @@ public class AutorService {
                 .orElseThrow(() -> new RuntimeException("Autor não encontrado"));
 
         autor.setNome(dto.nome());
+        autor.setDataNascimento(dto.dataNascimento());
         autor.setNacionalidade(dto.nacionalidade());
-
+        autorValidator.validarAutor(autor);
         return autorMapper.toDTO(autorRepository.save(autor));
     }
 
     public void deletar(Long id) {
+        int count = autorRepository.findById(id)
+                .map(autor -> autor.getLivros().size())
+                .orElse(0);
+        if (count > 0) {
+            throw new OperacaoNaoPermitidaException("Não é permitido excluir! Autor possui livro(s) cadastrado(s)");
+        }
         autorRepository.deleteById(id);
     }
 

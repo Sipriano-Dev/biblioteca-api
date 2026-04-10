@@ -2,6 +2,9 @@ package com.sipriano.biblioteca.controller;
 
 import com.sipriano.biblioteca.dto.AutorRequestDTO;
 import com.sipriano.biblioteca.dto.AutorResponseDTO;
+import com.sipriano.biblioteca.dto.ErroResposta;
+import com.sipriano.biblioteca.exceptions.OperacaoNaoPermitidaException;
+import com.sipriano.biblioteca.exceptions.RegistroDuplicadoException;
 import com.sipriano.biblioteca.service.AutorService;
 import jakarta.validation.Valid;
 import lombok.Getter;
@@ -11,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.util.List;
+import java.util.Objects;
 
 @Getter
 @RequiredArgsConstructor
@@ -21,15 +25,20 @@ public class AutorController {
     private final AutorService autorService;
 
     @PostMapping
-    public ResponseEntity<AutorResponseDTO> salvar(@RequestBody @Valid AutorRequestDTO requestDTO) {
-        AutorResponseDTO responseDTO = autorService.salvar(requestDTO);
-        return ResponseEntity.created(
-                ServletUriComponentsBuilder
-                        .fromCurrentRequest()
-                        .path("/{id}")
-                        .buildAndExpand(responseDTO.id())
-                        .toUri()
-        ).body(responseDTO);
+    public ResponseEntity<Object> salvar(@RequestBody @Valid AutorRequestDTO requestDTO) {
+        try {
+            AutorResponseDTO responseDTO = autorService.salvar(requestDTO);
+            return ResponseEntity.created(
+                    ServletUriComponentsBuilder
+                            .fromCurrentRequest()
+                            .path("/{id}")
+                            .buildAndExpand(responseDTO.id())
+                            .toUri()
+            ).body(responseDTO);
+        } catch (RegistroDuplicadoException e) {
+            var erroDto = ErroResposta.conflito(e.getMessage());
+            return ResponseEntity.status(erroDto.status()).body(erroDto);
+        }
     }
 
     @GetMapping
@@ -46,14 +55,24 @@ public class AutorController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<AutorResponseDTO> atualizar(@PathVariable Long id, @RequestBody AutorRequestDTO requestDTO) {
-        return ResponseEntity.ok(autorService.atualizar(id, requestDTO));
+    public ResponseEntity<Object> atualizar(@PathVariable Long id, @RequestBody AutorRequestDTO requestDTO) {
+        try {
+            return ResponseEntity.ok(autorService.atualizar(id, requestDTO));
+        } catch (RegistroDuplicadoException e) {
+            var erroDto = ErroResposta.conflito(e.getMessage());
+            return ResponseEntity.status(erroDto.status()).body(erroDto);
+        }
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletar(@PathVariable Long id) {
-        autorService.deletar(id);
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<Object> deletar(@PathVariable Long id) {
+        try {
+            autorService.deletar(id);
+            return ResponseEntity.noContent().build();
+        } catch (OperacaoNaoPermitidaException e) {
+            var erroDto = ErroResposta.respostaPadrao(e.getMessage());
+            return ResponseEntity.status(erroDto.status()).body(erroDto);
+        }
     }
 
 
