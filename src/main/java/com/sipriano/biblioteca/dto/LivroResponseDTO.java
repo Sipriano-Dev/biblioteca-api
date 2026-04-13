@@ -1,5 +1,6 @@
 package com.sipriano.biblioteca.dto;
 
+import com.sipriano.biblioteca.domain.Autor;
 import com.sipriano.biblioteca.domain.enums.GeneroLivro;
 
 import java.math.BigDecimal;
@@ -12,7 +13,7 @@ public record LivroResponseDTO(
         LocalDate dataPublicacao,
         GeneroLivro genero,
         BigDecimal preco,
-        Long autorId
+        AutorResponseDTO autorDto
 
 
 ) {}
