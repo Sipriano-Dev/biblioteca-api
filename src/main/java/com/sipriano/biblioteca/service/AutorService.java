@@ -4,6 +4,7 @@ import com.sipriano.biblioteca.domain.Autor;
 import com.sipriano.biblioteca.dto.AutorRequestDTO;
 import com.sipriano.biblioteca.dto.AutorResponseDTO;
 import com.sipriano.biblioteca.exceptions.OperacaoNaoPermitidaException;
+import com.sipriano.biblioteca.exceptions.RegistroNaoEncontradoException;
 import com.sipriano.biblioteca.mapper.AutorMapper;
 import com.sipriano.biblioteca.repository.AutorRepository;
 import com.sipriano.biblioteca.validator.AutorValidator;
@@ -42,7 +43,9 @@ public class AutorService {
     }
 
     public AutorResponseDTO buscarPorId(Long id) {
-        return autorRepository.findById(id).map(autorMapper::toDTO).orElse(null);
+        return autorRepository.findById(id)
+                .map(autorMapper::toDTO)
+                .orElseThrow(() -> new RegistroNaoEncontradoException("Autor não encontrado"));
     }
 
     //Aqui n usa autorMapper, pois atualiza o autor pego com dados do dto, antes era um update cego, sem confirma se ou autor existia

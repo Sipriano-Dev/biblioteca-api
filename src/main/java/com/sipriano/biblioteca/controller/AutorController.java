@@ -5,6 +5,7 @@ import com.sipriano.biblioteca.dto.AutorResponseDTO;
 import com.sipriano.biblioteca.dto.ErroResposta;
 import com.sipriano.biblioteca.exceptions.OperacaoNaoPermitidaException;
 import com.sipriano.biblioteca.exceptions.RegistroDuplicadoException;
+import com.sipriano.biblioteca.exceptions.RegistroNaoEncontradoException;
 import com.sipriano.biblioteca.service.AutorService;
 import jakarta.validation.Valid;
 import lombok.Getter;
@@ -50,8 +51,13 @@ public class AutorController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<AutorResponseDTO> buscarPorId(@PathVariable Long id) {
-        return ResponseEntity.ok(autorService.buscarPorId(id));
+    public ResponseEntity<Object> buscarPorId(@PathVariable Long id) {
+        try {
+            return ResponseEntity.ok(autorService.buscarPorId(id));
+        } catch (RegistroNaoEncontradoException e) {
+            var erroDto = ErroResposta.respostaPadrao(e.getMessage());
+            return ResponseEntity.status(erroDto.status()).body(erroDto);
+        }
     }
 
     @PutMapping("/{id}")

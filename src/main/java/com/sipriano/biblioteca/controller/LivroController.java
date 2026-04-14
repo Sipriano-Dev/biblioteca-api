@@ -1,7 +1,9 @@
 package com.sipriano.biblioteca.controller;
 
+import com.sipriano.biblioteca.dto.ErroResposta;
 import com.sipriano.biblioteca.dto.LivroRequestDTO;
 import com.sipriano.biblioteca.dto.LivroResponseDTO;
+import com.sipriano.biblioteca.exceptions.RegistroNaoEncontradoException;
 import com.sipriano.biblioteca.service.AutorService;
 import com.sipriano.biblioteca.service.LivroService;
 import jakarta.validation.Valid;
@@ -39,8 +41,13 @@ public class LivroController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<LivroResponseDTO> buscarPorId(@PathVariable Long id) {
-        return ResponseEntity.ok(livroService.buscarPorId(id));
+    public ResponseEntity<Object> buscarPorId(@PathVariable Long id) {
+        try {
+            return ResponseEntity.ok(livroService.buscarPorId(id));
+        } catch (RegistroNaoEncontradoException e) {
+            var erroDto = ErroResposta.respostaPadrao(e.getMessage());
+            return ResponseEntity.status(erroDto.status()).body(erroDto);
+        }
     }
 
     @PutMapping("/{id}")

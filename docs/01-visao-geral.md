@@ -96,7 +96,6 @@ Objetivo:
 ### 2️⃣ DTO ✔
 - Separação entre Entity e contrato da API
 - Conversão manual inicialmente
-- Utilizar mapper depois
 
 Objetivo:
 > Controlar entrada e saída de dados.

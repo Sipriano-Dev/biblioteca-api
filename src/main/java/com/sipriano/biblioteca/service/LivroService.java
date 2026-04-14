@@ -4,6 +4,7 @@ import com.sipriano.biblioteca.domain.Autor;
 import com.sipriano.biblioteca.dto.LivroRequestDTO;
 import com.sipriano.biblioteca.dto.LivroResponseDTO;
 import com.sipriano.biblioteca.domain.Livro;
+import com.sipriano.biblioteca.exceptions.RegistroNaoEncontradoException;
 import com.sipriano.biblioteca.mapper.LivroMapper;
 import com.sipriano.biblioteca.repository.AutorRepository;
 import com.sipriano.biblioteca.repository.LivroRepository;
@@ -32,7 +33,8 @@ public class LivroService {
     }
 
     public LivroResponseDTO buscarPorId(Long id) {
-        return livroRepository.findById(id).map(livroMapper::toDTO).orElse(null);
+        return livroRepository.findById(id).map(livroMapper::toDTO)
+                .orElseThrow(() -> new RegistroNaoEncontradoException("Livro não encontrado"));
     }
 
     public LivroResponseDTO atualizar(Long id, LivroRequestDTO dto) {
