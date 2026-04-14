@@ -4,6 +4,7 @@ import com.sipriano.biblioteca.dto.LivroRequestDTO;
 import com.sipriano.biblioteca.dto.LivroResponseDTO;
 import com.sipriano.biblioteca.service.AutorService;
 import com.sipriano.biblioteca.service.LivroService;
+import jakarta.validation.Valid;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +22,7 @@ public class LivroController {
     private final LivroService livroService;
 
     @PostMapping
-    public ResponseEntity<LivroResponseDTO> salvar(@RequestBody LivroRequestDTO requestDTO) {
+    public ResponseEntity<LivroResponseDTO> salvar(@RequestBody @Valid LivroRequestDTO requestDTO) {
         LivroResponseDTO responseDTO = livroService.salvar(requestDTO);
         return ResponseEntity.created(
                 ServletUriComponentsBuilder
@@ -43,7 +44,7 @@ public class LivroController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<LivroResponseDTO> atualizar(@PathVariable Long id, @RequestBody LivroRequestDTO requestDTO) {
+    public ResponseEntity<LivroResponseDTO> atualizar(@PathVariable Long id, @RequestBody @Valid LivroRequestDTO requestDTO) {
         return ResponseEntity.ok(livroService.atualizar(id, requestDTO));
     }
 
