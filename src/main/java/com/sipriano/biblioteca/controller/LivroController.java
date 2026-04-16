@@ -19,20 +19,14 @@ import java.util.List;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/livros")
-public class LivroController {
+public class LivroController implements GenericController{
 
     private final LivroService livroService;
 
     @PostMapping
     public ResponseEntity<LivroResponseDTO> salvar(@RequestBody @Valid LivroRequestDTO requestDTO) {
         LivroResponseDTO responseDTO = livroService.salvar(requestDTO);
-        return ResponseEntity.created(
-                ServletUriComponentsBuilder
-                        .fromCurrentRequest()
-                        .path("/{id}")
-                        .buildAndExpand(responseDTO.id())
-                        .toUri()
-        ).body(responseDTO);
+        return ResponseEntity.created(generateUri(responseDTO.id())).body(responseDTO);
     }
 
     @GetMapping

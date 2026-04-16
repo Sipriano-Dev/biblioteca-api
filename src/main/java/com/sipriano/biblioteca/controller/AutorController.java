@@ -21,7 +21,7 @@ import java.util.Objects;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/autores")
-public class AutorController {
+public class AutorController implements  GenericController{
 
     private final AutorService autorService;
 
@@ -29,13 +29,7 @@ public class AutorController {
     public ResponseEntity<Object> salvar(@RequestBody @Valid AutorRequestDTO requestDTO) {
         try {
             AutorResponseDTO responseDTO = autorService.salvar(requestDTO);
-            return ResponseEntity.created(
-                    ServletUriComponentsBuilder
-                            .fromCurrentRequest()
-                            .path("/{id}")
-                            .buildAndExpand(responseDTO.id())
-                            .toUri()
-            ).body(responseDTO);
+            return ResponseEntity.created(generateUri(responseDTO.id())).body(responseDTO);
         } catch (RegistroDuplicadoException e) {
             var erroDto = ErroResposta.conflito(e.getMessage());
             return ResponseEntity.status(erroDto.status()).body(erroDto);
