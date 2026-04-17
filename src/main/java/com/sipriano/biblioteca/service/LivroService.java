@@ -1,6 +1,7 @@
 package com.sipriano.biblioteca.service;
 
 import com.sipriano.biblioteca.domain.Autor;
+import com.sipriano.biblioteca.domain.enums.GeneroLivro;
 import com.sipriano.biblioteca.dto.LivroRequestDTO;
 import com.sipriano.biblioteca.dto.LivroResponseDTO;
 import com.sipriano.biblioteca.domain.Livro;
@@ -8,12 +9,16 @@ import com.sipriano.biblioteca.exceptions.RegistroNaoEncontradoException;
 import com.sipriano.biblioteca.mapper.LivroMapper;
 import com.sipriano.biblioteca.repository.AutorRepository;
 import com.sipriano.biblioteca.repository.LivroRepository;
+import com.sipriano.biblioteca.repository.specs.LivroSpecs;
 import com.sipriano.biblioteca.validator.LivroValidator;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 
 @Getter
@@ -32,8 +37,15 @@ public class LivroService {
         return livroMapper.toDTO(livroRepository.save(livro));
     }
 
-    public List<LivroResponseDTO> listar() {
-        return livroRepository.findAll().stream().map(livroMapper::toDTO).toList();
+    public List<LivroResponseDTO> listar(String titulo, String isbn, Integer anoPublicacao, GeneroLivro genero, String nomeAutor) {
+        Specification<Livro> specs = Specification
+                .where(LivroSpecs.tituloEquals(titulo))
+                .and(LivroSpecs.isbnEquals(isbn))
+                .and(LivroSpecs.anoPublicacaoEquals(anoPublicacao))
+                .and(LivroSpecs.generoEquals(genero))
+                .and(LivroSpecs.nomeAutorEquals(nomeAutor));
+        List<Livro> livros = livroRepository.findAll(specs);
+        return livros.stream().map(livroMapper::toDTO).toList();
     }
 
     public LivroResponseDTO buscarPorId(Long id) {

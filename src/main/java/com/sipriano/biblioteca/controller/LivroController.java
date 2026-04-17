@@ -1,5 +1,6 @@
 package com.sipriano.biblioteca.controller;
 
+import com.sipriano.biblioteca.domain.enums.GeneroLivro;
 import com.sipriano.biblioteca.dto.LivroRequestDTO;
 import com.sipriano.biblioteca.dto.LivroResponseDTO;
 import com.sipriano.biblioteca.service.LivroService;
@@ -9,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Getter
@@ -26,8 +28,14 @@ public class LivroController implements GenericController {
     }
 
     @GetMapping
-    public ResponseEntity<List<LivroResponseDTO>> listar() {
-        return ResponseEntity.ok(livroService.listar());
+    public ResponseEntity<List<LivroResponseDTO>> listar(
+            @RequestParam(required = false, value = "titulo") String titulo,
+            @RequestParam(required = false, value = "isbn") String isbn,
+            @RequestParam(required = false, value = "anoPublicacao") Integer anoPublicacao,
+            @RequestParam(required = false, value = "genero") GeneroLivro genero,
+            @RequestParam(required = false, value = "nomeAutor") String nomeAutor
+    ) {
+        return ResponseEntity.ok(livroService.listar(titulo, isbn, anoPublicacao, genero, nomeAutor));
     }
 
     @GetMapping("/{id}")

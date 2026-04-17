@@ -102,7 +102,7 @@ Objetivo:
 
 ---
 
-### 3️⃣ Validação
+### 3️⃣ Validação ✔
 - Validação antes do banco
 - Evitar erros 500 por dados inválidos
 
@@ -116,7 +116,7 @@ Objetivo:
 > Garantir histórico e integridade dos dados sem acoplar regra de negócio.
 ---
 
-### 5️⃣ Exception Handler
+### 5️⃣ Exception Handler ✔
 - Centralização do tratamento de erros
 - Respostas previsíveis
 
