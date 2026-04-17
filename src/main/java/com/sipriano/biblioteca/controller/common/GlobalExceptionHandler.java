@@ -2,6 +2,11 @@ package com.sipriano.biblioteca.controller.common;
 
 import com.sipriano.biblioteca.dto.ErroCampo;
 import com.sipriano.biblioteca.dto.ErroResposta;
+import com.sipriano.biblioteca.exceptions.CampoInvalidoException;
+import com.sipriano.biblioteca.exceptions.OperacaoNaoPermitidaException;
+import com.sipriano.biblioteca.exceptions.RegistroDuplicadoException;
+import com.sipriano.biblioteca.exceptions.RegistroNaoEncontradoException;
+import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -27,5 +32,42 @@ public class GlobalExceptionHandler {
                 "Erro de validação",
                 errosCampo);
     }
+
+    @ExceptionHandler(RegistroDuplicadoException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public ErroResposta handleRegistroDuplicadoException(RegistroDuplicadoException ex) {
+        return ErroResposta.conflito(ex.getMessage());
+    }
+
+    @ExceptionHandler(OperacaoNaoPermitidaException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErroResposta handleOperacaoNaoPermitidaException(OperacaoNaoPermitidaException ex) {
+        return ErroResposta.respostaPadrao(ex.getMessage());
+    }
+
+    @ExceptionHandler(RegistroNaoEncontradoException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public ErroResposta handleRegistroNaoEncontradoException(RegistroNaoEncontradoException ex) {
+        return ErroResposta.conflito(ex.getMessage());
+    }
+
+
+    @ExceptionHandler(CampoInvalidoException.class)
+    @ResponseStatus(HttpStatus.UNPROCESSABLE_CONTENT)
+    public ErroResposta handleCampoInvalidoException(CampoInvalidoException e) {
+        return new ErroResposta(
+                HttpStatus.UNPROCESSABLE_CONTENT.value(),
+                "Erro de validação",
+                List.of(new ErroCampo(e.getCampo(), e.getMessage())));
+    }
+
+    @ExceptionHandler(RuntimeException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ErroResposta handleErrosNaoTratados(RuntimeException ex) {
+        return new ErroResposta(HttpStatus.INTERNAL_SERVER_ERROR.value(),
+                "Ocorreu um erro inesperado, entre em contato com a administração.",
+                List.of());
+    }
+
 
 }

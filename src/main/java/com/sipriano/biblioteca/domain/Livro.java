@@ -31,7 +31,7 @@ public class Livro extends Auditoria {
     @Column(nullable = false, length = 30)
     private GeneroLivro genero;
 
-    @Column(nullable = false, length = 20, precision = 18, scale = 2)
+    @Column(length = 20, precision = 18, scale = 2)
     private BigDecimal preco;
 
     @ManyToOne

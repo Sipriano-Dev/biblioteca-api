@@ -8,6 +8,7 @@ import com.sipriano.biblioteca.exceptions.RegistroNaoEncontradoException;
 import com.sipriano.biblioteca.mapper.LivroMapper;
 import com.sipriano.biblioteca.repository.AutorRepository;
 import com.sipriano.biblioteca.repository.LivroRepository;
+import com.sipriano.biblioteca.validator.LivroValidator;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -21,10 +22,12 @@ public class LivroService {
 
     final LivroRepository livroRepository;
     final AutorRepository autorRepository;
+    final LivroValidator livroValidator;
     final LivroMapper livroMapper;
 
     public LivroResponseDTO salvar(LivroRequestDTO dto) {
         Livro livro = livroMapper.toEntity(dto);
+        livroValidator.validar(livro);
         return livroMapper.toDTO(livroRepository.save(livro));
     }
 
@@ -47,7 +50,7 @@ public class LivroService {
         livro.setPreco(dto.preco());
         Autor autor = autorRepository.findById(dto.autorId()).orElseThrow(() -> new RuntimeException("Autor não  encontrado!"));
         livro.setAutor(autor);
-
+        livroValidator.validar(livro);
         return livroMapper.toDTO(livroRepository.save(livro));
     }
 

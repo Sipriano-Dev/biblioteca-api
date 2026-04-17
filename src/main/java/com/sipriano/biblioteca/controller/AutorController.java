@@ -21,19 +21,14 @@ import java.util.Objects;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/autores")
-public class AutorController implements  GenericController{
+public class AutorController implements GenericController {
 
     private final AutorService autorService;
 
     @PostMapping
-    public ResponseEntity<Object> salvar(@RequestBody @Valid AutorRequestDTO requestDTO) {
-        try {
-            AutorResponseDTO responseDTO = autorService.salvar(requestDTO);
-            return ResponseEntity.created(generateUri(responseDTO.id())).body(responseDTO);
-        } catch (RegistroDuplicadoException e) {
-            var erroDto = ErroResposta.conflito(e.getMessage());
-            return ResponseEntity.status(erroDto.status()).body(erroDto);
-        }
+    public ResponseEntity<AutorResponseDTO> salvar(@RequestBody @Valid AutorRequestDTO requestDTO) {
+        AutorResponseDTO responseDTO = autorService.salvar(requestDTO);
+        return ResponseEntity.created(generateUri(responseDTO.id())).body(responseDTO);
     }
 
     @GetMapping
@@ -45,34 +40,19 @@ public class AutorController implements  GenericController{
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Object> buscarPorId(@PathVariable Long id) {
-        try {
-            return ResponseEntity.ok(autorService.buscarPorId(id));
-        } catch (RegistroNaoEncontradoException e) {
-            var erroDto = ErroResposta.respostaPadrao(e.getMessage());
-            return ResponseEntity.status(erroDto.status()).body(erroDto);
-        }
+    public ResponseEntity<AutorResponseDTO> buscarPorId(@PathVariable Long id) {
+        return ResponseEntity.ok(autorService.buscarPorId(id));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Object> atualizar(@PathVariable Long id, @RequestBody AutorRequestDTO requestDTO) {
-        try {
-            return ResponseEntity.ok(autorService.atualizar(id, requestDTO));
-        } catch (RegistroDuplicadoException e) {
-            var erroDto = ErroResposta.conflito(e.getMessage());
-            return ResponseEntity.status(erroDto.status()).body(erroDto);
-        }
+    public ResponseEntity<AutorResponseDTO> atualizar(@PathVariable Long id, @RequestBody AutorRequestDTO requestDTO) {
+        return ResponseEntity.ok(autorService.atualizar(id, requestDTO));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Object> deletar(@PathVariable Long id) {
-        try {
-            autorService.deletar(id);
-            return ResponseEntity.noContent().build();
-        } catch (OperacaoNaoPermitidaException e) {
-            var erroDto = ErroResposta.respostaPadrao(e.getMessage());
-            return ResponseEntity.status(erroDto.status()).body(erroDto);
-        }
+    public ResponseEntity<Void> deletar(@PathVariable Long id) {
+        autorService.deletar(id);
+        return ResponseEntity.noContent().build();
     }
 
 
