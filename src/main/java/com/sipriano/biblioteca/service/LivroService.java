@@ -11,6 +11,7 @@ import com.sipriano.biblioteca.repository.LivroRepository;
 import com.sipriano.biblioteca.validator.LivroValidator;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -55,6 +56,9 @@ public class LivroService {
     }
 
     public void deletar(Long id) {
+        if (!livroRepository.existsById(id)) {
+            throw new RegistroNaoEncontradoException("Livro não encontrado");
+        }
         livroRepository.deleteById(id);
     }
 

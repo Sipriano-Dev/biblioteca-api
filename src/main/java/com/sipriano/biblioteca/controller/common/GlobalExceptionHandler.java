@@ -46,9 +46,9 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(RegistroNaoEncontradoException.class)
-    @ResponseStatus(HttpStatus.CONFLICT)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
     public ErroResposta handleRegistroNaoEncontradoException(RegistroNaoEncontradoException ex) {
-        return ErroResposta.conflito(ex.getMessage());
+        return new ErroResposta(HttpStatus.NOT_FOUND.value(), ex.getMessage(), List.of());
     }
 
 
