@@ -8,7 +8,7 @@ import java.time.LocalDate;
 
 public class LivroSpecs {
 
-    public static Specification<Livro> tituloEquals(String titulo) {
+    public static Specification<Livro> tituloLike(String titulo) {
         return (root, query, cb) ->
                 titulo == null ? null :
                         cb.like(cb.upper(root.get("titulo")), "%" + titulo.toUpperCase() + "%");
@@ -37,7 +37,7 @@ public class LivroSpecs {
     }
 
 
-    public static Specification<Livro> nomeAutorEquals(String nomeAutor) {
+    public static Specification<Livro> nomeAutorLike(String nomeAutor) {
         return (root, query, cb) ->
                 nomeAutor == null ? null :
                         cb.like(cb.upper(root.join("autor").get("nome")), "%" + nomeAutor.toUpperCase() + "%");

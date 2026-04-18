@@ -39,11 +39,11 @@ public class LivroService {
 
     public List<LivroResponseDTO> listar(String titulo, String isbn, Integer anoPublicacao, GeneroLivro genero, String nomeAutor) {
         Specification<Livro> specs = Specification
-                .where(LivroSpecs.tituloEquals(titulo))
+                .where(LivroSpecs.tituloLike(titulo))
                 .and(LivroSpecs.isbnEquals(isbn))
                 .and(LivroSpecs.anoPublicacaoEquals(anoPublicacao))
                 .and(LivroSpecs.generoEquals(genero))
-                .and(LivroSpecs.nomeAutorEquals(nomeAutor));
+                .and(LivroSpecs.nomeAutorLike(nomeAutor));
         List<Livro> livros = livroRepository.findAll(specs);
         return livros.stream().map(livroMapper::toDTO).toList();
     }
@@ -54,14 +54,14 @@ public class LivroService {
     }
 
     public LivroResponseDTO atualizar(Long id, LivroRequestDTO dto) {
-        Livro livro = livroRepository.findById(id).orElseThrow(() -> new RuntimeException("Livro não encontrado!"));
+        Livro livro = livroRepository.findById(id).orElseThrow(() -> new RegistroNaoEncontradoException("Livro não encontrado!"));
 
         livro.setTitulo(dto.titulo());
         livro.setIsbn(dto.isbn());
         livro.setDataPublicacao(dto.dataPublicacao());
         livro.setGenero(dto.genero());
         livro.setPreco(dto.preco());
-        Autor autor = autorRepository.findById(dto.autorId()).orElseThrow(() -> new RuntimeException("Autor não  encontrado!"));
+        Autor autor = autorRepository.findById(dto.autorId()).orElseThrow(() -> new RegistroNaoEncontradoException("Autor não  encontrado!"));
         livro.setAutor(autor);
         livroValidator.validar(livro);
         return livroMapper.toDTO(livroRepository.save(livro));
