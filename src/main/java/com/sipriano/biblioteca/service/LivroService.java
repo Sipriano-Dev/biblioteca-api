@@ -13,12 +13,13 @@ import com.sipriano.biblioteca.repository.specs.LivroSpecs;
 import com.sipriano.biblioteca.validator.LivroValidator;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.http.ResponseEntity;
+
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.util.List;
 
 @Getter
@@ -37,15 +38,25 @@ public class LivroService {
         return livroMapper.toDTO(livroRepository.save(livro));
     }
 
-    public List<LivroResponseDTO> listar(String titulo, String isbn, Integer anoPublicacao, GeneroLivro genero, String nomeAutor) {
+    public Page<LivroResponseDTO> listar(String titulo,
+                                         String isbn,
+                                         Integer anoPublicacao,
+                                         GeneroLivro genero,
+                                         String nomeAutor,
+                                         Integer pagina,
+                                         Integer tamanhoPagina) {
         Specification<Livro> specs = Specification
                 .where(LivroSpecs.tituloLike(titulo))
                 .and(LivroSpecs.isbnEquals(isbn))
                 .and(LivroSpecs.anoPublicacaoEquals(anoPublicacao))
                 .and(LivroSpecs.generoEquals(genero))
                 .and(LivroSpecs.nomeAutorLike(nomeAutor));
-        List<Livro> livros = livroRepository.findAll(specs);
-        return livros.stream().map(livroMapper::toDTO).toList();
+
+        Pageable pageRequest = PageRequest.of(pagina, tamanhoPagina);
+
+        Page<Livro> livros = livroRepository.findAll(specs, pageRequest);
+        
+        return livros.map(livroMapper::toDTO);
     }
 
     public LivroResponseDTO buscarPorId(Long id) {
