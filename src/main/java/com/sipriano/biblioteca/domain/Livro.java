@@ -1,6 +1,6 @@
 package com.sipriano.biblioteca.domain;
 
-import com.sipriano.biblioteca.config.Auditoria;
+import com.sipriano.biblioteca.domain.base.Auditoria;
 import com.sipriano.biblioteca.domain.enums.GeneroLivro;
 import jakarta.persistence.*;
 import lombok.*;

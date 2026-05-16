@@ -1,6 +1,6 @@
 package com.sipriano.biblioteca.domain;
 
-import com.sipriano.biblioteca.config.Auditoria;
+import com.sipriano.biblioteca.domain.base.Auditoria;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,7 +24,6 @@ public class Autor extends Auditoria {
 
     @Column(nullable = false)
     private LocalDate dataNascimento;
-
 
     @Column(nullable = false, length = 50)
     private String nacionalidade;
